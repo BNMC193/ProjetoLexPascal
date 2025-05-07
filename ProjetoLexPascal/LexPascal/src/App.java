@@ -8,7 +8,7 @@ public class App {
 
         Executor exec = new Executor();
         // motor.CarregarArquivo();
-        exec.CarregarArquivo("ProjetoLexPascal-main\ProjetoLexPascal\LexPascal\src\Pascal\Hello.pas");
+        exec.CarregarArquivo("C:\\Users\\Gatha\\Downloads\\ProjetoLexPascal-main\\ProjetoLexPascal\\LexPascal\\src\\Pascal\\calculator.pas");
         exec.ProcessarBufferPrimario();
         exec.ImprimirBufferPrimario();
         exec.ProcessarBufferSecundario();

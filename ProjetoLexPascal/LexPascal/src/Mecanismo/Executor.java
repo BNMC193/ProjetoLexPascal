@@ -157,49 +157,51 @@ public class Executor {
     }
 
     public void AnalisarMontandoTabelaSimbolos(){
-        //AQUI É QUE ENTRA O TRABALHO DE VCS.
-        //1 - Precisa da Tabela de Simbolos do programa.
-        //2 - Precisa da Tabela de Simbolos da linguagem.
-        //3 - Precisa varrer o buffer secundário, para localizar os tokens, definindo o que é cada um dos lexemas.
-        TabelaSimbolosLinguagem tabela_Linguagem = new TabelaSimbolosLinguagem();
+        TabelaSimbolosLinguagem tabelaLinguagem = new TabelaSimbolosLinguagem();
         this.tabelaSimbolosPrograma = new LinkedHashMap<>();
-
         for (String texto : this.bufferSecundario){
+
             if (IsIdentifier(texto) == true){
-                if (tabela_Linguagem.getTabela().containsKey(texto)) {
-                    Token valorToken = tabela_Linguagem.getTabela().get(texto);
-                    valorToken.setToken("<'" + texto + "', " + tabela_Linguagem.getKeyWord() + ">");
+                if (tabelaLinguagem.getTabela().containsKey(texto)) {
+
+                    Token valorToken = tabelaLinguagem.getTabela().get(texto);
+                    valorToken.setToken("<'" + texto + "', " + tabelaLinguagem.getKeyWord() + ">");
                     this.tabelaSimbolosPrograma.put(texto, valorToken);
-                    
-                }else{
-                        Token temp = new Token(null, texto, tabela_Linguagem.getIdentifier(), texto, ++tabela_Linguagem.end);
-                        temp.setToken("<'" + texto + "', " + tabela_Linguagem.getIdentifier() + ">");
+            
+                } else{
+                  
+                        Token temp = new Token("<'" + texto + "', " + tabelaLinguagem.getIdentifier() + ">", texto, tabelaLinguagem.getIdentifier(), texto, ++tabelaLinguagem.end);
                         this.tabelaSimbolosPrograma.put(texto, temp);             
-                    }
-            }else if (IsLiteral(texto) == true){
-                Token temp = new Token(null, texto, tabela_Linguagem.getLiteral(), texto, ++tabela_Linguagem.end);
-                temp.setToken("<'" + texto + "', " + tabela_Linguagem.getLiteral() + ">");
+                  }
+                  
+            } else if (IsLiteral(texto) == true){
+
+                Token temp = new Token("<'" + texto + "', " + tabelaLinguagem.getLiteral() + ">", texto, tabelaLinguagem.getLiteral(), texto, ++tabelaLinguagem.end);
                 this.tabelaSimbolosPrograma.put(texto, temp);
-            }else if (IsCharacter(texto) == true){
-                if (tabela_Linguagem.getTabela().containsKey(texto)) {
-                    Token valorToken = tabela_Linguagem.getTabela().get(texto);
-                    valorToken.setToken("<'" + texto + "', " + tabela_Linguagem.getSimbol() + ">");
+
+            } else if (IsCharacter(texto) == true){
+
+                if (tabelaLinguagem.getTabela().containsKey(texto)) {
+                    Token valorToken = tabelaLinguagem.getTabela().get(texto);
+                    valorToken.setToken("<'" + texto + "', " + tabelaLinguagem.getSimbol() + ">");
                     this.tabelaSimbolosPrograma.put(texto, valorToken);                   
                 }
-            }else if (IsNumber(texto) == true){
-                Token temp = new Token(null, texto, tabela_Linguagem.getNumber(), texto, ++tabela_Linguagem.end);
-                temp.setToken("<'" + texto + "', " + tabela_Linguagem.getNumber() + ">");
+
+            } else if (IsNumber(texto) == true){
+
+                Token temp = new Token("<'" + texto + "', " + tabelaLinguagem.getNumber() + ">", texto, tabelaLinguagem.getNumber(), texto, ++tabelaLinguagem.end);
                 this.tabelaSimbolosPrograma.put(texto, temp);
-            }else {
-                Token temp = new Token(null, texto, tabela_Linguagem.getUndefined(), texto, ++tabela_Linguagem.end);
-                temp.setToken("<'" + texto + "', " + tabela_Linguagem.getUndefined() + ">");
+
+            } else{
+
+                Token temp = new Token("<'" + texto + "', " + tabelaLinguagem.getUndefined() + ">", texto, tabelaLinguagem.getUndefined(), texto, ++tabelaLinguagem.end);
                 this.tabelaSimbolosPrograma.put(texto, temp);
+
             }
         }
     }
 
     public void ImprimirTabelaSimbolosPrograma(){
-        //A parte final, na qual vc imprime todas as entradas da Tabela de Simbolos do programa, após o processamento.
         System.out.println("----------------------------------------");
         System.out.println("##### Tabela de Simbolos do Programa: #####");
         for (var entry : this.tabelaSimbolosPrograma.entrySet()){
